@@ -1,5 +1,6 @@
-# print the board
+import os
 
+# print the board
 def print_board(board):
     print( 
     board[0] + '|' + board[1] + '|' + board[2] + '\n' +
@@ -7,30 +8,93 @@ def print_board(board):
     board[6] + '|' + board[7] + '|' + board[8]
     )
 
-# create a board
-board = [
-    "-", "-", "-",
-    "-", "-", "-",
-    "-", "-", "-"
-]
-
-
-print_board(board)
-
 
 # handle a turn
-while True:
-    try:
-        player_turn = int(input("Please enter a number between 1 and 9: "))
-        if 1 <= player_turn <= 9:
-            break
-    except:
-        continue
+def one_turn():
+    while True:
+        try:
+            player_turn = int(input("Please enter a number between 1 and 9: "))
+            if 1 <= player_turn <= 9:
+                return player_turn
+        except:
+            continue
 
-# keep asking for turns and switch x and o
-# verify winner
-    # 3 in a row horizontally
-    # 3 in a row vertically
-    # 3 in a row diagonally
-# if no winner, tie
+# mark a spot
+def mark_spot(board, turn, turn_counter):
+    if board[turn - 1] != '-':
+        print("Move already made")
+        return False
+    if turn_counter % 2 == 0:
+        board[turn - 1] = 'x'
+        return True
+    else:
+        board[turn - 1] = 'o'
+        return True
 
+
+
+# actual game loop
+def game_loop(board):
+    
+    turn_counter = 0
+    is_winner = False
+
+    while not is_winner:
+        # get spot number from input
+        turn = one_turn()
+        # update board
+        result = mark_spot(board, turn, turn_counter)
+        if result:
+            turn_counter += 1
+        is_winner = check_winner(board)
+        print(is_winner)
+        print_board(board)
+        if '-' not in board:
+            print("Tie!")
+            exit()
+            
+
+
+# check winner
+def check_winner(board):
+    # horizonals
+    if (board[0] == 'x' and board[1] == 'x' and board[2] == 'x') or (board[0] == 'o' and board[1] == 'o' and board[2] == 'o'):
+        return True
+    if (board[3] == 'x' and board[4] == 'x' and board[5] == 'x') or (board[3] == 'o' and board[4] == 'o' and board[5] == 'o'):
+        return True
+    if (board[6] == 'x' and board[7] == 'x' and board[8] == 'x') or (board[6] == 'o' and board[7] == 'o' and board[8] == 'o'):
+        return True
+
+    # diagonals
+    if (board[0] == 'x' and board[4] == 'x' and board[8] == 'x') or (board[0] == 'o' and board[4] == 'o' and board[8] == 'o'):
+        return True
+    if (board[2] == 'x' and board[4] == 'x' and board[6] == 'x') or (board[2] == 'o' and board[4] == 'o' and board[6] == 'o'):
+        return True
+
+    # verticals
+    if (board[0] == 'x' and board[3] == 'x' and board[6] == 'x') or (board[0] == 'o' and board[3] == 'o' and board[6] == 'o'):
+        return True
+    if (board[1] == 'x' and board[4] == 'x' and board[7] == 'x') or (board[1] == 'o' and board[4] == 'o' and board[7] == 'o'):
+        return True
+    if (board[2] == 'x' and board[5] == 'x' and board[8] == 'x') or (board[2] == 'o' and board[5] == 'o' and board[8] == 'o'):
+        return True
+    else:
+        return False
+
+
+def main():
+
+    board = [
+        "-", "-", "-",
+        "-", "-", "-",
+        "-", "-", "-"
+    ]
+    
+    # keep track of chosen numbers
+    print_board(board)
+    game_loop(board)
+
+
+
+if __name__ == "__main__":
+    main()
