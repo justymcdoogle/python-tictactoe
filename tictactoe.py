@@ -72,6 +72,8 @@ def game_loop(board):
 
         # tie handler
         if '-' not in board:
+            os.system('clear')
+            print_board(board)
             print("Tie!")
             exit()
 
@@ -128,6 +130,7 @@ def main():
     ]
     
     # show inital board before game starts
+    os.system('clear')
     print_board(board)
     print("X's turn.")
     # actual game loop
