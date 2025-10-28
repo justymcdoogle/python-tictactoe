@@ -34,9 +34,9 @@ def mark_spot(board, turn, turn_counter):
 def game_loop(board):
     
     turn_counter = 0
-    is_winner = False
+    is_winner = 0
 
-    while not is_winner:
+    while is_winner == 0:
         # get spot number from input
         turn = one_turn()
         # update board
@@ -56,33 +56,54 @@ def game_loop(board):
             print("Tie!")
             exit()
 
+    if is_winner == 1:
+        print('X wins!')
+    else:
+        print('O wins!')
+
 
 # check winner
 def check_winner(board):
 
-    # horizonals
-    if (board[0] == 'x' and board[1] == 'x' and board[2] == 'x') or (board[0] == 'o' and board[1] == 'o' and board[2] == 'o'):
-        return True
-    if (board[3] == 'x' and board[4] == 'x' and board[5] == 'x') or (board[3] == 'o' and board[4] == 'o' and board[5] == 'o'):
-        return True
-    if (board[6] == 'x' and board[7] == 'x' and board[8] == 'x') or (board[6] == 'o' and board[7] == 'o' and board[8] == 'o'):
-        return True
+    X_WINS = 1
+    O_WINS = 2
 
-    # diagonals
-    if (board[0] == 'x' and board[4] == 'x' and board[8] == 'x') or (board[0] == 'o' and board[4] == 'o' and board[8] == 'o'):
-        return True
-    if (board[2] == 'x' and board[4] == 'x' and board[6] == 'x') or (board[2] == 'o' and board[4] == 'o' and board[6] == 'o'):
-        return True
+    # horizonals for x
+    if (board[0] == 'x' and board[1] == 'x' and board[2] == 'x') or \
+       (board[3] == 'x' and board[4] == 'x' and board[5] == 'x') or \
+       (board[6] == 'x' and board[7] == 'x' and board[8] == 'x'):
+        return X_WINS
 
-    # verticals
-    if (board[0] == 'x' and board[3] == 'x' and board[6] == 'x') or (board[0] == 'o' and board[3] == 'o' and board[6] == 'o'):
-        return True
-    if (board[1] == 'x' and board[4] == 'x' and board[7] == 'x') or (board[1] == 'o' and board[4] == 'o' and board[7] == 'o'):
-        return True
-    if (board[2] == 'x' and board[5] == 'x' and board[8] == 'x') or (board[2] == 'o' and board[5] == 'o' and board[8] == 'o'):
-        return True
+    # horizonals for o
+    if (board[0] == 'o' and board[1] == 'o' and board[2] == 'o') or \
+       (board[3] == 'o' and board[4] == 'o' and board[5] == 'o') or \
+       (board[6] == 'o' and board[7] == 'o' and board[8] == 'o'):
+        return O_WINS
+
+    # diagonals for x
+    if (board[0] == 'x' and board[4] == 'x' and board[8] == 'x') or \
+       (board[2] == 'x' and board[4] == 'x' and board[6] == 'x'):
+        return X_WINS
+
+    # diagonals for o
+    if (board[0] == 'o' and board[4] == 'o' and board[8] == 'o') or \
+       (board[2] == 'o' and board[4] == 'o' and board[6] == 'o'):
+        return O_WINS
+
+    # verticals for x
+    if (board[0] == 'x' and board[3] == 'x' and board[6] == 'x') or \
+       (board[1] == 'x' and board[4] == 'x' and board[7] == 'x') or \
+       (board[2] == 'x' and board[5] == 'x' and board[8] == 'x'):
+        return X_WINS
+ 
+    # verticals for o
+    if (board[0] == 'o' and board[3] == 'o' and board[6] == 'o') or \
+       (board[1] == 'o' and board[4] == 'o' and board[7] == 'o') or \
+       (board[2] == 'o' and board[5] == 'o' and board[8] == 'o'):
+        return O_WINS
+
     else:
-        return False
+        return 0
 
 
 def main():
