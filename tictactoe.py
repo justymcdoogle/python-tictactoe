@@ -22,7 +22,6 @@ def one_turn():
 # mark a spot
 def mark_spot(board, turn, turn_counter):
     if board[turn - 1] != '-':
-        print("Move already made")
         return False
     if turn_counter % 2 == 0:
         board[turn - 1] = 'x'
@@ -32,8 +31,6 @@ def mark_spot(board, turn, turn_counter):
         return True
 
 
-
-# actual game loop
 def game_loop(board):
     
     turn_counter = 0
@@ -47,17 +44,22 @@ def game_loop(board):
         # only increment if valid move
         if result:
             turn_counter += 1
-            os.system('clear')
+
+        os.system('clear')
         is_winner = check_winner(board)
         print_board(board)
+
+        if not result:
+            print("Spot already taken")
+
         if '-' not in board:
             print("Tie!")
             exit()
-            
 
 
 # check winner
 def check_winner(board):
+
     # horizonals
     if (board[0] == 'x' and board[1] == 'x' and board[2] == 'x') or (board[0] == 'o' and board[1] == 'o' and board[2] == 'o'):
         return True
@@ -91,8 +93,9 @@ def main():
         "-", "-", "-"
     ]
     
-    # keep track of chosen numbers
+    # show inital board before game starts
     print_board(board)
+    # actual game loop
     game_loop(board)
 
 
