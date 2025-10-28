@@ -44,10 +44,11 @@ def game_loop(board):
         turn = one_turn()
         # update board
         result = mark_spot(board, turn, turn_counter)
+        # only increment if valid move
         if result:
             turn_counter += 1
+            os.system('clear')
         is_winner = check_winner(board)
-        print(is_winner)
         print_board(board)
         if '-' not in board:
             print("Tie!")
